@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and Play MP3 File</title>
+</head>
+<body>
+    <h2>Upload and Play MP3 File</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="mp3file" id="mp3file">
+      
+    </form>
+
+    <h3>Uploaded MP3 Files</h3>
+    <ul id="mp3List"></ul>
+
+    <script>
+        fetch('/music.json')
+    .then(response => response.json())
+    .then(files => {
+        const mp3List = document.getElementById('mp3List');
+        files.forEach(file => {
+            const listItem = document.createElement('li');
+
+            // Hiển thị tên file
+            listItem.textContent = file;
+
+            // Tạo phần tử audio để phát file MP3
+            const audio = document.createElement('audio');
+            audio.controls = true;
+            audio.src = '/play/' + file;
+
+            // Tạo nút tải file MP3
+            const downloadLink = document.createElement('a');
+            downloadLink.href = '/play/' + file;
+            downloadLink.download = file;  // Tên file khi tải về
+            downloadLink.textContent = 'Tải về';
+
+            // Thêm phần tử audio và nút tải vào list item
+            listItem.appendChild(audio);
+            listItem.appendChild(downloadLink);
+
+            // Thêm list item vào danh sách
+            mp3List.appendChild(listItem);
+        });
+    });
+
+    </script>
+</body>
+</html>

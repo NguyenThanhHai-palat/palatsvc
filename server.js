@@ -5,6 +5,7 @@ const fs = require("fs");
 const app = express();
 const port = 3000;
 
+// Thiết lập lưu trữ file
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "dataupload/"); // Đường dẫn thư mục để lưu file
@@ -483,7 +484,6 @@ app.post("/api/uploadlist", express.json(), (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server đang chạy tại http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`App listening at http://localhost:${port}`);
 });
